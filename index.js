@@ -1,6 +1,6 @@
 import {APIKEY} from "./config.js";
 
-films =[];
+let films = [];
 
 const span = document.getElementsByClassName("close")[0];
 const film_container = document.getElementById("result");
@@ -9,13 +9,12 @@ const form = document.querySelector("form");
 
 
 async function fetchFilm (search){
-    await fetch(`https://www.omdbapi.com/?s=${search}&${APIKEY}`)
+    await fetch(`https://www.omdbapi.com/?s=${search}&apikey=${APIKEY}`)
     .then((res) =>res.json())
     .then((data)=> (films = data.Search))
 }
 
 function display(){
-
   films.map((film)=>{
     const li =  document.createElement("li")
     li.classList.add("card")

@@ -9,7 +9,7 @@ const form = document.querySelector("form");
 
 
 async function fetchFilm (search){
-    await fetch(`http://www.omdbapi.com/?s=${search}&${APIKEY}`)
+    await fetch(`https://www.omdbapi.com/?s=${search}&${APIKEY}`)
     .then((res) =>res.json())
     .then((data)=> (films = data.Search))
 }

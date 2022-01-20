@@ -11,74 +11,67 @@ const form = document.querySelector("form");
 async function fetchFilm (search){
     await fetch(`https://www.omdbapi.com/?s=${search}&apikey=${APIKEY}`)
     .then((res) =>res.json())
-    .then((data)=> (films = data.Search))
+    .then((data)=> console.log(films) (films = data.Search))
+    .catch((error)=> console.log(error))
 }
 
 function display(){
-  films.map((film)=>{
-    const li =  document.createElement("li")
-    li.classList.add("card")
+    if (films === undefined) {film_container.innerHTML = "<h2>Aucun résultat</h2>"
+    console.log(films)
+} else {
+        films.map((film)=>{
+            const li =  document.createElement("li")
+            li.classList.add("card")
     li.innerHTML = 
     `
     <h1> ${film.Title}</h1>
     <img src="${film.Poster}">
-    <h2> ${film.Year}</h2>
-
+    
     `
     const btn = document.createElement("button")
     btn.innerText = "Click me!"
-
+    
     li.insertAdjacentElement("beforeend",btn)
     const div = document.createElement("div")
     div.classList.add("modal")
     div.innerHTML = 
     `<div class="modal-content">
     <span class="close">&times;</span>
-    <p>${film.Title}</p>
+    <p>Titre : ${film.Title}</p>
+    <h2> Type : ${film.Type}</h2>
+    <h2> Année sortie ${film.Year}</h2>
+    <h2> N° Imdb : ${film.imdbID}</h2>
     </div>`
     div.style.display = "none";
     li.insertAdjacentElement("beforeend",div)
     btn.addEventListener("click",()=>{
         div.style.display = "block"
     })
-
+    
     div.addEventListener("click",(event)=>{
         console.log(event.target.classList.contains("close"));
         if (event.target.classList.contains("close") ) {
             console.log(div)
-          div.style.display = "none";
+            div.style.display = "none";
         }
     })
-   
-    // <li class='card'>
     
-    // <h1> ${film.Title}</h1>
-    // <img src="${film.Poster}">
-    // <h2> ${film.Year}</h2>
-    
-    // <button class="bbtn" id="myBtn" >Click Me!</button>
-    // <div id="myModal" class="modal">
-    
-    // <div class="modal-content">
-    // <span class="close">&times;</span>
-    // <p>Some text in the Modal..</p>
-    // </div>
-    
-    // </div>
-    // </li>
-    // `
     film_container.insertAdjacentElement("beforeend",li)
-})
+    console.log(film)
+})}
 }
 
+
+
+
 input.addEventListener("input",(e)=>{
-    
+    film_container.innerHTML=""
+
     fetchFilm(e.target.value);
 })
 
 form.addEventListener("submit",(e)=>{
     e.preventDefault();
-    fetchFilm(e.target.value);
     display();
 })
 
